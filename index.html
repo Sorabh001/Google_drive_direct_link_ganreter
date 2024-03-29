@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<title>Responsive headerbar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/body.css">
+<style>
+.container {
+  display: block;
+}
+.hidden {
+  display: none;
+}
+</style>
+</head>
+<body>
+<header>
+<input type="checkbox" id="check">
+<label for="check" class="checkbtn">
+<img  src="/icons/reorder.svg" alt="close" id="closeButton">
+</label>
+<img src="/icons/logo.png" alt="logo.png">
+<ul>
+<li><a href="#">Home</a></li>
+<li><a href="#">About</a></li>
+<li><a href="#">Services</a></li>
+<li><a href="#">Contact</a></li>
+<li><a href="#">Feedback</a></li>
+</ul>
+</header>
+<section class="container">
+<div>
+<input type="url" class="input-url" placeholder="Enter URL">
+<div class="top-img"><a href="#"><img src="/icons/video.svg"></a>
+<a href="#"><img src="/icons/link.svg"></a></div>
+<div class="dropdown">
+<button class="dropbtn" id="optionsButton">Options
+<img src="/icons/down.svg" id="downIcon" ><img src="/icons/forward.svg" style="display: none;" id="forwardIcon">
+</button>
+<button class="convert-button">Convert</button>
+<div class="dropdown-content" id="optionsDropdown">
+<a href="#">dairact</a>
+<a href="#">button</a>
+<a href="#">countdown</a>
+</div>
+</div>
+</div>
+</section>
+</body>
+<script src="/javascript/script.js"></script>
+</html>
