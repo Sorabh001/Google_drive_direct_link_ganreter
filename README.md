@@ -1,1 +1,0 @@
-# Google_drive_direct_link_ganreter
