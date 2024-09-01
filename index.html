@@ -6,48 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Shared Drive Generator</title>
     <style>
-        
         body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-.container {
-    text-align: center;
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-input {
-    margin: 10px;
-    padding: 8px;
-    width: 250px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
+        input {
+            margin: 10px;
+            padding: 8px;
+            width: 250px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
 
-button {
-    padding: 10px 20px;
-    margin: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #4285f4;
-    color: #fff;
-    transition: background-color 0.3s;
-}
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4285f4;
+            color: #fff;
+            transition: background-color 0.3s;
+        }
 
-button:hover {
-    background-color: #357ae8;
-}    
-            
+        button:hover {
+            background-color: #357ae8;
+        }
     </style>
 </head>
 <body>
@@ -60,61 +58,70 @@ button:hover {
 
     <!-- Load Google API Client Library -->
     <script src="https://apis.google.com/js/api.js"></script>
-  <script defer='defer' type="text/JavaScript">
-
-// Load the Google API client library
-function handleClientLoad() {
-    gapi.load('client:auth2', initClient);
-}
-
-// Initialize the API client library and set up sign-in state listeners
-function initClient() {
-    gapi.client.init({
-        apiKey: 'AIzaSyC1cDMnTasYgPTFsJmfgbZ3uUAwKumQBfo',
-        clientId: '538857908875-hj18r6te9v0rrdhkabcigu8h7h113h2a.apps.googleusercontent.com',
-        discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
-        scope: 'https://www.googleapis.com/auth/drive'
-    }).then(() => {
-        const authButton = document.getElementById('btn-authenticate');
-        const createButton = document.getElementById('btn-create-drive');
-
-        // Set up click listeners
-        authButton.onclick = handleAuthClick;
-        createButton.onclick = createSharedDrive;
-    });
-}
-
-// Sign in the user upon button click
-function handleAuthClick() {
-    gapi.auth2.getAuthInstance().signIn();
-}
-
-// Create a shared drive
-function createSharedDrive() {
-    const driveName = document.getElementById('drive-name').value;
-
-    if (!driveName) {
-        alert('Please enter a name for the shared drive.');
-        return;
-    }
-
-    gapi.client.drive.drives.create({
-        requestId: Math.random().toString(36).substring(7),
-        resource: {
-            name: driveName
+    <script>
+        // Load the Google API client library
+        function handleClientLoad() {
+            console.log('Loading Google API client...');
+            gapi.load('client:auth2', initClient);
         }
-    }).then((response) => {
-        alert(`Shared Drive "${driveName}" created successfully!`);
-        console.log(response);
-    }, (error) => {
-        console.error(error);
-        alert('Error creating shared drive.');
-    });
-}
 
-// Load the API and make an API call.
-handleClientLoad();
+        // Initialize the API client library and set up sign-in state listeners
+        function initClient() {
+            console.log('Initializing Google API client...');
+            gapi.client.init({
+                apiKey: 'AIzaSyC1cDMnTasYgPTFsJmfgbZ3uUAwKumQBfo',
+                clientId: '538857908875-hj18r6te9v0rrdhkabcigu8h7h113h2a.apps.googleusercontent.com',
+                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+                scope: 'https://www.googleapis.com/auth/drive'
+            }).then(() => {
+                console.log('API client initialized successfully.');
+                const authButton = document.getElementById('btn-authenticate');
+                const createButton = document.getElementById('btn-create-drive');
 
-</script>
+                // Set up click listeners
+                authButton.onclick = handleAuthClick;
+                createButton.onclick = createSharedDrive;
+            }).catch(error => {
+                console.error('Error initializing API client:', error);
+            });
+        }
+
+        // Sign in the user upon button click
+        function handleAuthClick() {
+            console.log('Attempting to sign in...');
+            gapi.auth2.getAuthInstance().signIn().then(() => {
+                console.log('User signed in successfully.');
+            }).catch(error => {
+                console.error('Error signing in:', error);
+            });
+        }
+
+        // Create a shared drive
+        function createSharedDrive() {
+            const driveName = document.getElementById('drive-name').value;
+
+            if (!driveName) {
+                alert('Please enter a name for the shared drive.');
+                return;
+            }
+
+            console.log('Creating shared drive:', driveName);
+            gapi.client.drive.drives.create({
+                requestId: Math.random().toString(36).substring(7),
+                resource: {
+                    name: driveName
+                }
+            }).then((response) => {
+                alert(`Shared Drive "${driveName}" created successfully!`);
+                console.log('Drive created:', response);
+            }).catch((error) => {
+                console.error('Error creating shared drive:', error);
+                alert('Error creating shared drive.');
+            });
+        }
+
+        // Load the API and make an API call.
+        handleClientLoad();
+    </script>
 </body>
 </html>
